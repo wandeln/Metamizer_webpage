@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Metamizer: a Versatile Neural Optimizer for Fast and Accurate Physics Simulations">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metamizer: a Versatile Neural Optimizer for Fast and Accurate Physics Simulations</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  
+    
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript"
+    src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Metamizer: a Versatile Neural Optimizer for Fast and Accurate Physics Simulations</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=UbKw5nEAAAAJ&hl=en">Nils Wandel</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=WEFLPx4AAAAJ&hl=de">Stefan Schulz</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://cg.cs.uni-bonn.de/person/prof-dr-reinhard-klein">Reinhard Klein</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Bonn</span>
+            <span class="author-block"><a href="mailto://wandeln@cs.uni-bonn.de">wandeln@cs.uni-bonn.de</a></span>
+          </div>
+
+            <!-- TODO -->
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="Metamizer_preprint.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!--
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+               -->
+              <!-- Code Link. -->
+              <!--span class="link-block">
+                <a href="https://github.com/wandeln/metamizer"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/Metamizer Teaser.mp4"
+                type="video/mp4">
+      </video>
+      <!--img id="teaser" src="./static/images/Teaser.png"-->
+      <h2 class="subtitle has-text-centered">
+        <strong>Metamizer</strong> is able to simulate various linear and non-linear physical systems. All of the shown simulations were performed in real-time by the same net (same architecture and same weights).
+        PDEs marked in red were not considered during training.
+      </h2>
+      
+      
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+        
+          <p>
+          Efficient physics simulations are essential for numerous applications, ranging from realistic cloth animations or smoke effects in video games, to analyzing pollutant dispersion in environmental sciences, to calculating vehicle drag coefficients in engineering applications. Unfortunately, analytical solutions to the underlying physical equations are rarely available, and numerical solutions require high computational resources. Latest developments in the field of physics-based Deep Learning have led to promising efficiency improvements but still suffer from limited generalization capabilities and low accuracy compared to numerical solvers.
+          </p>
+          <p>
+
+          In this work, we introduce Metamizer, a novel neural optimizer that iteratively solves a wide range of physical systems with high accuracy by minimizing a physics-based loss function. To this end, our approach leverages a scale-invariant architecture that enhances gradient descent updates to accelerate convergence. Since the neural network itself acts as an optimizer, training this neural optimizer falls into the category of meta-optimization approaches.
+          </p>
+          <p>
+
+          We demonstrate that Metamizer achieves unprecedented accuracy for deep learning based approaches - sometimes approaching machine precision - across multiple PDEs after training on the Laplace, advection-diffusion and incompressible Navier-Stokes equation as well as on cloth simulations. Remarkably, the model also generalizes to PDEs that were not covered during training such as the Poisson, wave and Burgers equation.
+          </p>
+          <p>
+
+          Our results suggest that Metamizer could have a profound impact on future numerical solvers, paving the way for fast and accurate neural physics simulations without the need for retraining.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+      <div style="display:flex;flex-direction:column;align-items:center;padding-bottom:10px">
+        <img id="teaser" src="./static/images/Architecture.png" style="width:100%;max-width:500px">
+      </div>
+      <h2 class="subtitle has-text-centered">
+        The scale invariant neural optimization architecture allows to iteratively optimize solutions of PDEs up to high accuracy. More information is provided in our <a href="Metamizer_preprint.pdf">&rarr;preprint</a>.
+      </h2>
+      
+      
+      
+    <!-- Paper video. -->
+    <!--div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div-->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Linear PDEs</h2>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+    
+      <h3 class="title is-4">Laplace Equation</h3>
+      <p>
+      The Laplace equation is given by:
+      </p>
+      $$\Delta u = 0$$
+      <p>
+        Metamizer iteratively refines a solution $u_i$. To this end, it takes the gradients of a physics-based loss $\nabla_u L_i$ (here, $L=$ the mean squared residuals of the Laplace equation) as input and suggests an update step $\Delta u_i$ to compute $u_{i+1}=u_i+\Delta u_i$ (Attention: don't confuse this update step $\Delta u_i$ with the Laplace operator ;). To enable large steps at the beginning and fine adjustments at the end of the optimization, Metamizer utilizes an internal scaling factor $s_i$ (similar to a learning rate). The following step by step visualization demonstrates this optimization process:
+      </p>
+      <div style="display:flex;flex-direction:column;align-items:center">
+      <video id="dollyzoom" autoplay controls muted loop playsinline height="100%" style="max-width:600px;width:100%">
+        <source src="./static/videos/movie_laplace.mp4"
+                type="video/mp4">
+      </video>
+      </div>
+      
+      <p style="text-align:center;margin-top:5px;">
+      ... after about 50 iterations, Metamizer reaches the limits of machine precision, preventing further optimization.
+      </p>
+      
+      <br>
+      <h3 class="title is-4">Accuracy</h3>
+      
+      <p>
+      We compared the performance of Metamizer with several other gradient based optimizers (SGD, Adam, AdamW, RMSprop, Adagrad, Adadelta) as well as iterative sparse linear system solvers from scipy (cg, minres, gcrotmk, gmres, lgmres). All qualitative results shown on this website were performed on a 100x100 grid. To investigate the scaling behavior for larger grids, we also performed a test on a 400x400 grid.
+      </p>
+      <br>
+    
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <h5 class="title is-5" style="text-align:center">100x100 grid</h3>
+          <!--video id="dollyzoom" autoplay controls muted loop playsinline height="100%" style="max-width:200px">
+            <source src="./static/videos/movie_laplace.mp4"
+                    type="video/mp4">
+          </video-->
+          
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <img id="teaser" src="./static/images/comparison_iterative_sparse_solvers_100x100_2.png" style="width:100%;max-width:500px">
+            </div>
+          <p>
+          Metamizer reaches a mean squared residual loss of $6.7\times 10^{-33}$ after only $0.08 s$ on a 100x100 grid.
+          This is significantly faster than other gradient based methods like SGD, Adam, etc and even slightly outperforms sparse linear system solvers. In contrast to linear system solvers however, Metamizer can be applied to non-linear systems as well (see examples below). To the best of our knowledge, there exist no other deep learning based approaches that achieve this level of accuracy.
+          </p>
+            
+        </div>
+      </div>
+      
+      <div class="column">
+        <h5 class="title is-5" style="text-align:center">400x400 grid</h3>
+        <div class="columns is-centered">
+          <div class="column content">
+            <!--video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/movie_laplace.mp4"
+                      type="video/mp4">
+            </video-->
+            
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <img id="teaser" src="./static/images/comparison_iterative_sparse_solvers_400x400_2.png" style="width:100%;max-width:500px">
+            </div>
+            <p>
+            To investigate the scaling behavior on larger grid sizes, we retrained a Metamizer to solve the Laplace equation on a 400x400 grid. Here, the performance improvement becomes even more distinct as Metamizer can be easily parallelized on GPUs.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <h3 class="title is-4">Poisson Equation</h3>
+      <p>
+      The Poisson equation is the non-homogeneous form of the Laplace equation:
+      </p>
+      $$\Delta u = f$$
+      <p>
+        Although Metamizer was not trained on the Poisson equation, it is able to generalize. In the following example, we search for the electro-static potential of 2 oppositely charged particles within a box:
+      </p>
+      <div style="display:flex;flex-direction:column;align-items:center">
+      <video id="dollyzoom" autoplay controls muted loop playsinline height="100%" style="max-width:600px;width:100%">
+        <source src="./static/videos/movie_poisson.mp4"
+                type="video/mp4">
+      </video>
+      </div>
+    
+      <br>
+      
+      <h3 class="title is-4">Advection-Diffusion Equation</h3>
+      
+      <p>
+      The advection-diffusion equation is given by:
+      </p>
+      $$
+      \partial_t u = D \Delta u - \nabla \cdot (\vec{v} \, u) + R
+      $$
+      
+      <p>
+	  Here, $D$ is the diffusivity parameter, $\vec{v}$ the velocity field for the advection term and $R$ corresponds to the source / sink term. 
+      The following videos show simulations of a small heat-source in a spinning velocity field for different diffusivity parameters synchronized with the simulation speed of Metamizer:
+      </p>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <h3 class="video_caption">$D=0.1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_diffusion_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <!--div class="item">
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_diffusion_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div-->
+        <div class="item">
+          <h3 class="video_caption">$D=0.5$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_diffusion_3.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$D=2$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_diffusion_4.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$D=10$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_diffusion_5.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      
+      <br>
+      <h3 class="title is-4">Wave Equation</h3>
+      
+      <p>
+      The wave equation is given by:
+      </p>
+      $$
+      \partial_t^2 u = c^2 \partial_x^2 u
+      $$
+      
+      <p>
+      Here, $c$ corresponds to the wave propagation speed. The wave equation wasn't considered during training. The following videos show simulations for different wave propagation speeds synchronized with the simulation speed of Metamizer:
+      </p>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <h3 class="video_caption">$c=1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_wave_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$c=2$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_wave_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$c=10$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_wave_3.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$c=1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_wave_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      
+      
+      
+    
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Non-Linear PDEs</h2>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+    
+      <h3 class="title is-4">Navier-Stokes Equation</h3>
+      
+      <p>
+      The Navier-Stokes equation is an important non-linear PDE to describe the velocity field $\vec{v}$ and pressure field $p$ of a fluid:
+      </p>
+      $$
+      \rho\left( \partial_t \vec{v} + \left(\vec{v} \cdot \nabla \right) \vec{v} \right) = \mu \Delta \vec{v} - \nabla p + \vec{f}_\textrm{ext}
+      $$
+	  Here, $\mu$ corresponds to the fluids viscosity and $\rho$ to its density. Below, some examples with different viscosities and densities are presented:
+      
+      
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <h3 class="video_caption">$\mu=0.1, \rho=4$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_fluid_1_fast.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$\mu=1, \rho=10$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_fluid_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$\mu=10, \rho=10$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_fluid_3.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$\mu=5, \rho=1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_fluid_4.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      
+      <br>
+      <h3 class="title is-4">Burgers Equation</h3>
+      
+      <p>
+      The Burgers equation is given by:
+      </p>
+      $$
+      \partial_t \vec{v} + \left(\vec{v} \cdot \nabla \right) \vec{v} = \mu \Delta \vec{v}
+      $$
+	  Here, $\mu$ is a viscosity parameter. The Burgers equation exhibits interesting shock patterns and wasn't considered during training. Below, we present some examples with $\mu=0.3$ and $\mu=1$:
+      
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <h3 class="video_caption">$\mu=0.3$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_burgers_1_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$\mu=0.3$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_burgers_1_3.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$\mu=1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_burgers_2_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$\mu=1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_burgers_2_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      
+      
+      <br>
+      <h3 class="title is-4">Cloth Simulation</h3>
+      
+      <p>
+      For cloth simulations, we follow previous works by <a href="https://arxiv.org/abs/2204.02219">Santesteban et al.</a> and <a href="https://openaccess.thecvf.com/content/CVPR2024/html/Stotko_Physics-guided_Shape-from-Template_Monocular_Video_Perception_through_Neural_Surrogate_Models_CVPR_2024_paper.html">Stotko et al.</a> and utilize the following loss:
+	  $$
+	  L = E_\textrm{int}(\vec{x}^t)  - \Delta t^2 \langle \vec{F}_{\mathrm{ext}}, \vec{a}^t \rangle + \frac{1}{2} (\Delta t)^2 \langle \vec{a}^t, M \vec{a}^t \rangle
+	  $$
+	  Here, $\vec{F}_{\mathrm{ext}}$ corresponds to external forces (such as gravity or wind), $M$ is the mass matrix and $E_\textrm{int}$ are the internal energies of the cloth specified as follows:
+		$$
+		E_\textrm{int} = c_\textrm{stiff} \frac{1}{2} \sum_{\vec{e} \in \textrm{edges}}\left(||\vec{e}||-1\right)^2 + c_\textrm{shear} \frac{1}{2} \sum_{\psi \in \textrm{right angles}}(\psi-90^\circ)^2 + c_\textrm{bend}\frac{1}{2} \sum_{\theta \in \textrm{straight angles}}(\theta-180^\circ)^2 
+		$$
+		where $c_\textrm{stiff},c_\textrm{shear},c_\textrm{bend}$ are parameters that describe stiffness, shearing and bending properties of the cloth. Below, we show some simulation results for different cloth parameters:
+      </p>
+      
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <!--h3 class="title is-4">C=1</h3-->
+          <h3 class="video_caption">$c_\textrm{stiff}=1000$, $c_\textrm{shear}=10$, $c_\textrm{bend}=0.1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_cloth_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$c_\textrm{stiff}=1000$, $c_\textrm{shear}=1000$, $c_\textrm{bend}=10$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_cloth_2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$c_\textrm{stiff}=1000$, $c_\textrm{shear}=10$, $c_\textrm{bend}=1000$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_cloth_3.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <h3 class="video_caption">$c_\textrm{stiff}=1000$, $c_\textrm{shear}=10$, $c_\textrm{bend}=0.1$</h3>
+          <video poster="" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/movie_cloth_1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+    <!-- Concurrent Work. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">More Information</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            For more information, please have a look at our <a href="Metamizer_preprint.pdf">preprint</a>.
+		  </p>
+		  <p>
+			<!--To reproduce our results, feel free to check out our <a href="">github repository</a>.-->
+			Code as well as a pretrained model will be made available upon acceptance.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{wandel2025metamizer,
+  author    = {Wandel, Nils and Schulz, Stefan and Klein, Reinhard},
+  title     = {Metamizer: a Versatile Neural Optimizer for Fast and Accurate Physics Simulations},
+  journal   = {Under review at ICLR},
+  year      = {2025},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="Metamizer_preprint.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/wandeln" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Thanks to Keunhong Park and Micah Seneshen for sharing their <a
+              href="https://github.com/nerfies/nerfies.github.io">template</a> of this website!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
