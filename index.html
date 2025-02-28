@@ -26,9 +26,8 @@
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <!--link rel="stylesheet" href="./static/css/fontawesome.all.min.css"-->
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
@@ -58,16 +57,16 @@
           <h1 class="title is-1 publication-title">Metamizer: a Versatile Neural Optimizer for Fast and Accurate Physics Simulations</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=UbKw5nEAAAAJ&hl=en">Nils Wandel</a><sup>1</sup>,</span>
+              <a href="https://scholar.google.com/citations?user=UbKw5nEAAAAJ&hl=en">Nils Wandel</a>,</span>
             <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=WEFLPx4AAAAJ&hl=de">Stefan Schulz</a><sup>1</sup>,</span>
+              <a href="https://scholar.google.com/citations?user=WEFLPx4AAAAJ&hl=de">Stefan Schulz</a>,</span>
             <span class="author-block">
-              <a href="https://cg.cs.uni-bonn.de/person/prof-dr-reinhard-klein">Reinhard Klein</a><sup>1</sup>
+              <a href="https://cg.cs.uni-bonn.de/person/prof-dr-reinhard-klein">Reinhard Klein</a>
             </span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Bonn</span>
+            <span class="author-block">University of Bonn</span>
           </div>
 
           <div class="is-size-5 publication-authors">
@@ -78,17 +77,16 @@
           <div class="column has-text-centered">
             <div class="publication-links">
               <span class="link-block">
-                <a href="Metamizer_preprint.pdf"
+                <a href="https://arxiv.org/pdf/2410.19746"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                   </span>
-                  <span>Preprint</span>
+                  <span>Paper</span>
                 </a>
               </span>
-              <!--
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
+                <a href="https://arxiv.org/abs/2410.19746"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -96,6 +94,7 @@
                   <span>arXiv</span>
                 </a>
               </span>
+              <!--
               <span class="link-block">
                 <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
                    class="external-link button is-normal is-rounded is-dark">
@@ -104,10 +103,9 @@
                   </span>
                   <span>Video</span>
                 </a>
-              </span>
-               -->
+              </span>-->
               <!-- Code Link. -->
-              <!--span class="link-block">
+              <span class="link-block">
                 <a href="https://github.com/wandeln/metamizer"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
@@ -115,7 +113,7 @@
                   </span>
                   <span>Code</span>
                   </a>
-              </span-->
+              </span>
             </div>
 
           </div>
@@ -177,7 +175,7 @@
         <img id="teaser" src="./static/images/Architecture.png" style="width:100%;max-width:500px">
       </div>
       <h2 class="subtitle has-text-centered">
-        The scale invariant neural optimization architecture allows to iteratively optimize solutions of PDEs up to high accuracy. More information is provided in our <a href="Metamizer_preprint.pdf">&rarr;preprint</a>.
+        The scale invariant neural optimization architecture allows to iteratively optimize solutions of PDEs up to high accuracy. More information is provided in our <a href="https://arxiv.org/pdf/2410.19746">paper</a>.
       </h2>
       
       
@@ -563,11 +561,10 @@
 
         <div class="content has-text-justified">
           <p>
-            For more information, please have a look at our <a href="Metamizer_preprint.pdf">preprint</a>.
+            For more information, please have a look at our <a href="https://arxiv.org/pdf/2410.19746">paper</a>.
 		  </p>
 		  <p>
-			<!--To reproduce our results, feel free to check out our <a href="">github repository</a>.-->
-			Code as well as a pretrained model will be made available upon acceptance.
+			Code as well as a pretrained model are available in our <a href="https://github.com/wandeln/Metamizer">github repository</a>.
           </p>
         </div>
       </div>
@@ -581,11 +578,11 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{wandel2025metamizer,
-  author    = {Wandel, Nils and Schulz, Stefan and Klein, Reinhard},
-  title     = {Metamizer: a Versatile Neural Optimizer for Fast and Accurate Physics Simulations},
-  journal   = {Under review at ICLR},
-  year      = {2025},
+    <pre><code>@inproceedings{w2024metamizer,
+	title={Metamizer: a versatile neural optimizer for fast and accurate physics simulations},
+	author={Nils Wandel and Stefan Schulz and Reinhard Klein},
+	booktitle={International Conference on Learning Representations (ICLR)},
+	year={2025}
 }</code></pre>
   </div>
 </section>
@@ -594,11 +591,14 @@
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <a class="icon-link"
-         href="Metamizer_preprint.pdf">
+      <a class="icon-link" href="https://arxiv.org/pdf/2410.19746">
         <i class="fas fa-file-pdf"></i>
       </a>
-      <a class="icon-link" href="https://github.com/wandeln" class="external-link" disabled>
+      
+	<a class="icon-link" href="https://arxiv.org/abs/2410.19746">
+		<i class="ai ai-arxiv"></i>
+	</a>
+      <a class="icon-link" href="https://github.com/wandeln/Metamizer" class="external-link" disabled>
         <i class="fab fa-github"></i>
       </a>
     </div>
